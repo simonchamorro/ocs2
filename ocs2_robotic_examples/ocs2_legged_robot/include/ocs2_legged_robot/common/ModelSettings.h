@@ -56,5 +56,25 @@ struct ModelSettings {
 
 ModelSettings loadModelSettings(const std::string& filename, const std::string& fieldName = "model_settings", bool verbose = "true");
 
+struct Go1ModelSettings {
+  scalar_t positionErrorGain = 0.0;
+
+  scalar_t phaseTransitionStanceTime = 0.4;
+
+  bool verboseCppAd = true;
+  bool recompileLibrariesCppAd = true;
+  std::string modelFolderCppAd = "/tmp/ocs2";
+
+  // This is only used to get names for the knees and to check urdf for extra joints that need to be fixed.
+  std::vector<std::string> jointNames{"FL_hip_joint", "FL_thigh_joint", "FL_calf_joint", "RL_hip_joint", "RL_thigh_joint", "RL_calf_joint",
+                                      "FR_hip_joint", "FR_thigh_joint", "FR_calf_joint", "RR_hip_joint", "RR_thigh_joint", "RR_calf_joint"};
+
+  std::vector<std::string> contactNames6DoF{};
+  std::vector<std::string> contactNames3DoF{"FR_foot", "RR_foot", "FL_foot", "RL_foot"};
+};
+
+Go1ModelSettings loadGo1ModelSettings(const std::string& filename, const std::string& fieldName = "model_settings", bool verbose = "true");
+
+
 }  // namespace legged_robot
 }  // namespace ocs2

@@ -62,5 +62,30 @@ ModelSettings loadModelSettings(const std::string& filename, const std::string& 
   return modelSettings;
 }
 
+Go1ModelSettings loadGo1ModelSettings(const std::string& filename, const std::string& fieldName, bool verbose) {
+  Go1ModelSettings modelSettings;
+
+  boost::property_tree::ptree pt;
+  boost::property_tree::read_info(filename, pt);
+
+  if (verbose) {
+    std::cerr << "\n #### Legged Robot Model Settings:";
+    std::cerr << "\n #### =============================================================================\n";
+  }
+
+  loadData::loadPtreeValue(pt, modelSettings.positionErrorGain, fieldName + ".positionErrorGain", verbose);
+  loadData::loadPtreeValue(pt, modelSettings.phaseTransitionStanceTime, fieldName + ".phaseTransitionStanceTime", verbose);
+
+  loadData::loadPtreeValue(pt, modelSettings.verboseCppAd, fieldName + ".verboseCppAd", verbose);
+  loadData::loadPtreeValue(pt, modelSettings.recompileLibrariesCppAd, fieldName + ".recompileLibrariesCppAd", verbose);
+  loadData::loadPtreeValue(pt, modelSettings.modelFolderCppAd, fieldName + ".modelFolderCppAd", verbose);
+
+  if (verbose) {
+    std::cerr << " #### =============================================================================" << std::endl;
+  }
+
+  return modelSettings;
+}
+
 }  // namespace legged_robot
 }  // namespace ocs2

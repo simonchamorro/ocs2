@@ -103,6 +103,21 @@ target_link_libraries(legged_robot_ddp_mpc
 )
 target_compile_options(legged_robot_ddp_mpc PRIVATE ${OCS2_CXX_FLAGS})
 
+# DDP-MPC node for go1 robot
+add_executable(go1_robot_ddp_mpc
+  src/Go1RobotDdpMpcNode.cpp
+)
+add_dependencies(go1_robot_ddp_mpc
+  ${PROJECT_NAME}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(go1_robot_ddp_mpc
+  ${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
+target_compile_options(go1_robot_ddp_mpc PRIVATE ${OCS2_CXX_FLAGS})
+
 ## SQP-MPC node for legged robot
 add_executable(legged_robot_sqp_mpc
   src/LeggedRobotSqpMpcNode.cpp
@@ -173,6 +188,7 @@ if(cmake_clang_tools_FOUND)
      TARGETS
        ${PROJECT_NAME}
        legged_robot_ddp_mpc
+       go1_robot_ddp_mpc
        legged_robot_sqp_mpc
        legged_robot_dummy
        legged_robot_target
@@ -197,6 +213,7 @@ install(TARGETS ${PROJECT_NAME}
 install(
   TARGETS
     legged_robot_ddp_mpc
+    go1_robot_ddp_mpc
     legged_robot_sqp_mpc
     legged_robot_dummy
     legged_robot_target
